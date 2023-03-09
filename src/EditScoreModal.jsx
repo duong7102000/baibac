@@ -22,24 +22,33 @@ const style = {
 function convertListPlayer(listPlayer) {
     let result = [];
     listPlayer.forEach((element) => {
-        let player = { name: "", score: null };
+        let player = { name: "", score: 0 };
         player.name = element.name;
         result = [...result, player];
     });
     return result;
 }
 
+function checkSum(listPlayer) {
+    let sumScore = 0;
+    listPlayer.forEach((player) => {
+        sumScore = sumScore + Number(player.score);
+    });
+    return sumScore === 0;
+}
+
 export default function EditScoreModal(props) {
     const [listPlayer, setListPlayer] = React.useState(
         convertListPlayer(props.listPlayer)
     );
+    const [canSubmit, setCanSubmit] = React.useState(true);
     React.useEffect(() => {
         setListPlayer(convertListPlayer(props.listPlayer));
     }, [props.listPlayer]);
 
     const resetScore = () => {
         listPlayer.forEach((element) => {
-            element.score = null;
+            element.score = 0;
         });
         setListPlayer(listPlayer);
     };
@@ -56,7 +65,7 @@ export default function EditScoreModal(props) {
                     <div>
                         {listPlayer.map((player, index) => {
                             return (
-                                <div key={index}>
+                                <div key={Math.random()}>
                                     <TextField
                                         id="outlined-number"
                                         type="number"
@@ -74,6 +83,9 @@ export default function EditScoreModal(props) {
                                             var newListPlayer = [...listPlayer];
                                             newListPlayer[index] = newPlayer;
                                             setListPlayer(newListPlayer);
+                                            setCanSubmit(() =>
+                                                checkSum(newListPlayer)
+                                            );
                                         }}
                                     />
                                 </div>
@@ -90,11 +102,10 @@ export default function EditScoreModal(props) {
                                 aria-label="add"
                                 color="success"
                                 onClick={() => {
+                                    props.onClickSubmit(listPlayer);
                                     handleClose();
                                 }}
-                                // disabled={
-                                //     playerInput.length === 0 ? true : false
-                                // }
+                                disabled={!canSubmit}
                             >
                                 <CheckOutlinedIcon />
                             </IconButton>

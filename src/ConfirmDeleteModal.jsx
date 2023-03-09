@@ -1,11 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
-import Stack from "@mui/system/Stack";
+import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack"
 
 const style = {
     position: "absolute",
@@ -17,31 +17,25 @@ const style = {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    display: "flex",
+    alignItem: "center",
+    flexDirection: "column",
 };
 
-export default function AddPlayerModal(props) {
-    const [playerInput, setPlayerInput] = React.useState("");
-
+export default function ConfirmDeleteModal(props) {
     const handleClose = () => {
         props.callBack(false);
     };
 
-    const addPlayer = (player) => {
-        props.addPlayer(player);
+    const handleSubmit = () => {
+        props.handleSubmit();
     };
 
     return (
         <div>
             <Modal open={props.status} onClose={handleClose}>
                 <Box sx={style}>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Con nghiện mới"
-                        sx={{ width: "400px", marginBottom: "10px" }}
-                        value={playerInput}
-                        onChange={(e) => setPlayerInput(e.target.value)}
-                    />
+                    <Typography align="center">Có muốn xoá không?</Typography>
                     <Stack
                         direction={{ xs: "column", sm: "row" }}
                         spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -53,19 +47,16 @@ export default function AddPlayerModal(props) {
                             color="success"
                             onClick={() => {
                                 handleClose();
-                                setPlayerInput("");
-                                addPlayer(playerInput);
+                                handleSubmit();
                             }}
-                            disabled={playerInput.length === 0 ? true : false}
                         >
-                            <AddCircleOutlineOutlinedIcon />
+                            <CheckCircleOutlineRoundedIcon />
                         </IconButton>
                         <IconButton
                             aria-label="delete"
                             color="error"
                             onClick={() => {
                                 handleClose();
-                                setPlayerInput("");
                             }}
                         >
                             <CancelOutlinedIcon />
