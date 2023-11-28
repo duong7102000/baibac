@@ -1,0 +1,10 @@
+.responsive-width {
+    width: 400px;
+}
+
+@media screen and (max-width: 768px) {
+    .responsive-width {
+        width: 200px;
+    }
+}
+
