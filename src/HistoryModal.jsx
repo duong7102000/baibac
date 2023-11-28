@@ -23,6 +23,7 @@ const style = {
     maxHeight: '100%',
     display: 'flex',
     overflow: 'auto',
+    justifyContent: 'center'
 };
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -87,7 +88,7 @@ export default function HistoryModal(props) {
         <div>
             <Modal open={props.status} onClose={props.callBack}>
                 <Box sx={style} className='responsive-width'>
-                    <Paper sx={{ overflow: 'hidden' }}>
+                    <Paper sx={{ overflow: 'hidden', width: '100%' }}>
                         <TableContainer sx={{ maxHeight: '100%' }}>
                             <Table stickyHeader aria-label='sticky table'>
                                 <TableHead>
